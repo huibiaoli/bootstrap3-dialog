@@ -1226,6 +1226,7 @@
             draggable: false,
             buttonLabel: BootstrapDialog.DEFAULT_TEXTS.OK,
             buttonHotkey: null,
+            btnOKClass: null,
             callback: null
         };
 
@@ -1238,11 +1239,16 @@
             });
         }
 
+        if (alertOptions.btnOKClass === null) {
+            alertOptions.btnOKClass = ['btn', alertOptions.type.split('-')[1]].join('-');
+        }
+
         var dialog = new BootstrapDialog(alertOptions);
         dialog.setData('callback', alertOptions.callback);
         dialog.addButton({
             label: alertOptions.buttonLabel,
             hotkey: alertOptions.buttonHotkey,
+            cssClass: alertOptions.btnOKClass,
             action: function (dialog) {
                 if (typeof dialog.getData('callback') === 'function' && dialog.getData('callback').call(this, true) === false) {
                     return false;
